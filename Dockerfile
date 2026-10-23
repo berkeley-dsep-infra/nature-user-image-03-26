@@ -1,4 +1,4 @@
-FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-image:c25cdff
+FROM us-central1-docker.pkg.dev/ucb-datahub-2018/base-images-repo/base-r-image:0af0740
 
 USER root
 RUN apt-get update && apt-get install -y tini && rm -rf /var/lib/apt/lists/*
@@ -22,9 +22,8 @@ COPY --chown=${NB_USER}:${NB_USER} environment.yml /tmp/environment.yml
 
 
 # Update existing /srv/conda/notebook environment with new packages
-RUN mamba env update -n notebook -f /tmp/environment.yml && \
-    mamba clean -afy && rm -rf /tmp/environment.yml
-
+RUN conda env update  -n notebook -f /tmp/environment.yml && \
+    conda clean -afy && rm -rf /tmp/environment.yml
 
 USER root
 RUN rm -rf /tmp/*
